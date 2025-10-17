@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { baseUrl } from "../baseUrl";
 
 export const AppContext = createContext();
@@ -33,13 +33,13 @@ export function AppContextProvider({ children }) {
 
     }
     // call fetchBlogPosts when page changes
-    useState(() => {
+    useEffect(() => {
         fetchBlogPosts(page);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
 
     async function changePage(page) {
         setPage(page);
-        fetchBlogPosts(page);
     }
 
     // value to be passed to provider
