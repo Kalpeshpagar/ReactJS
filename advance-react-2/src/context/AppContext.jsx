@@ -12,9 +12,18 @@ export function AppContextProvider({ children }) {
     const [error, setError] = useState(null);
 
     // fetch data from api
-    async function fetchBlogPosts(page = 1) {
+    async function fetchBlogPosts(page = 1, tag = null, category) {
         setLoading(true);
         let url = `${baseUrl}?page=${page}`;
+        if (tag) {
+            url += `&tag=${tag}`
+        }
+        if (category) {
+            url += `&category=${category}`
+        }
+        // if (page) {
+        //     url += `&page=${page}`
+        // }
         try {
             const res = await fetch(url);
             const data = await res.json();
@@ -40,6 +49,10 @@ export function AppContextProvider({ children }) {
 
     async function changePage(page) {
         setPage(page);
+<<<<<<< HEAD
+=======
+        //  fetchBlogPosts(page);
+>>>>>>> fe88f47 (WIP: local changes before rebase)
     }
 
     // value to be passed to provider
