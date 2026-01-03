@@ -32,7 +32,7 @@ export function AppContextProvider({ children }) {
             setPosts(data.posts);
             setTotalPages(data.totalPages);
             setLoading(false);
-        }catch(err) {
+        } catch (err) {
             setError(err);
             setPage(1);
             setPosts([]);
@@ -49,27 +49,23 @@ export function AppContextProvider({ children }) {
 
     async function changePage(page) {
         setPage(page);
-<<<<<<< HEAD
-=======
-        //  fetchBlogPosts(page);
->>>>>>> fe88f47 (WIP: local changes before rebase)
+
+        // value to be passed to provider
+        const value = {
+            loading,
+            setLoading,
+            posts,
+            setPosts,
+            page,
+            setPage,
+            totalPages,
+            setTotalPages,
+            error,
+            setError,
+            fetchBlogPosts,
+            changePage,
+        };
+
+        return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
     }
-
-    // value to be passed to provider
-    const value = {
-        loading,
-        setLoading,
-        posts,
-        setPosts,
-        page,
-        setPage,
-        totalPages,
-        setTotalPages,
-        error,
-        setError,
-        fetchBlogPosts,
-        changePage,
-    };
-
-    return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
