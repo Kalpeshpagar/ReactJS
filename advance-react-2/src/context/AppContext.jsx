@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { baseUrl } from "../baseUrl";
 
 export const AppContext = createContext();
@@ -12,9 +12,18 @@ export function AppContextProvider({ children }) {
     const [error, setError] = useState(null);
 
     // fetch data from api
-    async function fetchBlogPosts(page = 1) {
+    async function fetchBlogPosts(page = 1, tag = null, category) {
         setLoading(true);
         let url = `${baseUrl}?page=${page}`;
+        if (tag) {
+            url += `&tag=${tag}`
+        }
+        if (category) {
+            url += `&category=${category}`
+        }
+        // if (page) {
+        //     url += `&page=${page}`
+        // }
         try {
             const res = await fetch(url);
             const data = await res.json();
@@ -33,13 +42,14 @@ export function AppContextProvider({ children }) {
 
     }
     // call fetchBlogPosts when page changes
-    useState(() => {
+    useEffect(() => {
         fetchBlogPosts(page);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
 
     async function changePage(page) {
         setPage(page);
-        fetchBlogPosts(page);
+        //  fetchBlogPosts(page);
     }
 
     // value to be passed to provider
